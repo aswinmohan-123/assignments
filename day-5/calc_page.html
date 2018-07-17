@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Calculator</title>
+<link rel="stylesheet" href="style_calc.css">
+</head>
+<body>
+<form id="reading">
+<div class="inputi">
+First Value:
+<input type="number" id="first" name="first"><br>
+Second Value:
+<input type="number" id="second" name="second"><br>
+</div>
+<div class='operation' id="op">
+<input type="radio" name="group1" id="add" value="add" checked="true">+&nbsp &nbsp
+<input type="radio" name="group1" id="subtract" value="subtract">-&nbsp &nbsp
+<input type="radio" name="group1" id="times" value="times">*&nbsp &nbsp
+<input type="radio" name="group1" id="divide" value="divide">/&nbsp &nbsp
+</div>
+<div class="but">
+<button type="button" name="answer" id="answer" value="answer" onclick='load()'>Submit</button>
+<button type="button" name="answer" id="cancel" value="cancel" onclick='can()'>Cancel</button>
+</div>
+</form>
+Result:<div id="out"></div>
+<script>
+function load(){
+	var num1=document.getElementById("first").value;
+	var num2=document.getElementById("second").value;
+	var op=document.querySelector('input[name=group1]:checked').value;
+	var xhttp=new XMLHttpRequest();
+	xhttp.open("POST","calc_server.php","true");
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	var value ="first="+num1+"&second="+num2+"&group1="+op;
+	xhttp.send(value);
+	xhttp.onreadystatechange=function(){
+			if(xhttp.readyState == 4 && xhttp.status == 200) {
+		        var return_data = xhttp.responseText;
+		        document.getElementById("out").innerHTML = return_data;
+			}
+}
+}
+function can(){
+	document.getElementById("out").innerHTML="";
+	document.getElementById("first").value="";
+	document.getElementById("second").value="";
+	document.querySelector('input[name=group1]').checked=true;
+}
+
+</script>
+</body>
+</html>

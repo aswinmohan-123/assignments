@@ -1,0 +1,51 @@
+<head>
+<meta charset="utf-8">
+<title>Currency converter</title>
+<link rel="stylesheet" href="style_cur.css">
+</head>
+<body>
+<form action="" method="POST">
+<select name="currency" class="drop" id="sel">
+	<option value="" selected disabled hidden>Currency</option>
+	<option value="us_doller">US Doller</option>
+	<option value="euro">Euro</option>
+	<option value="british_pound">Pound</option>
+	<option value="australian_doller">Australian Doller</option>
+	<option value="canada_doller">Canadian Doller</option>
+	<option value="singapore_doller">Singapore Doller</option>
+	<option value="swiss frank">Swiss Frank</option>
+	<option value="malasian_ringget">Malasian Ringget</option>
+	<option value="japan_yen">Japanese Yen</option>
+	<option value="chinese_yuan">Chinese Yuan</option>
+
+</select>
+<div class="value"><input type="number" name="value" id="val"></div>
+<br>
+<div class="but">
+<input type="button" name="answer" value="submit" onclick=load()>
+<input type="button" name="answer" value="cancel" onclick=can()></div>
+<br>
+</form>
+<div id="out"></div>
+<script>
+function load(){
+var op=document.getElementById("sel").value;
+var val=document.getElementById("val").value;
+xhttp=new XMLHttpRequest();
+xhttp.open("POST","cur_server.php",true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+var value="currency="+op+"&value="+val;
+xhttp.send(value);
+xhttp.onreadystatechange=function() {
+	if (xhttp.readyState==4 && xhttp.status==200){
+		document.getElementById("out").innerHTML=xhttp.responseText;		
+	}
+}
+}
+function can(){
+	document.getElementById("sel").value="";
+	document.getElementById("val").value=0;
+}
+
+</script>
+</body>

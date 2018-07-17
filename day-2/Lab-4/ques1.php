@@ -1,0 +1,7 @@
+<?php
+$num=30;
+$sum=0;
+for ($i=0; $i<=$num; $i++) {
+    $sum+=$i;
+}
+echo $sum;
